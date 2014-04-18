@@ -67,7 +67,7 @@
       }
     },
     "public": true,
-    "dataSource": "mysql",
+    "dataSource": "postgresql",
     "plural": "accounts"
   }
 }
