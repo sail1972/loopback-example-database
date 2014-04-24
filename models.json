@@ -67,7 +67,7 @@
       }
     },
     "public": true,
-    "dataSource": "postgresql",
+    "dataSource": "accountDB",
     "plural": "accounts"
   }
 }

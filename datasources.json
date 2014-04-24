@@ -14,18 +14,10 @@
     "defaultForType": "mail",
     "connector": "mail"
   },
-  "mysql": {
-    "connector": "mysql",
-    "host": "demo.strongloop.com",
-    "port": 3306,
-    "database": "demo",
-    "username": "demo",
-    "password": "L00pBack"
-  },
-  "postgresql": {
-    "connector": "postgresql",
-    "host": "demo.strongloop.com",
-    "port": 5432,
+  "accountDB": {
+    "connector": "mssql",
+    "host": "localhost",
+    "port": 1433,
     "database": "demo",
     "username": "demo",
     "password": "L00pBack"

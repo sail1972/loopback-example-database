@@ -1,5 +1,5 @@
 var app = require('./app');
-var dataSource = app.dataSources.postgresql;
+var dataSource = app.dataSources.accountDB;
 var Account = app.models.account;
 var accounts = [ 
     { email: "foo@bar.com",
