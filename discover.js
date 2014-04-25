@@ -10,7 +10,7 @@ dataSource.discoverAndBuildModels('account', {owner: 'dbo'}, function (err, mode
         if (err) {
             console.error(err);
         } else {
-            console.log(act);
+            console.log('Accounts', act);
         }
         dataSource.disconnect();
     });

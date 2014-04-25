@@ -16,7 +16,7 @@
   },
   "accountDB": {
     "connector": "mssql",
-    "host": "localhost",
+    "host": "mssql.strongloop.com",
     "port": 1433,
     "database": "demo",
     "username": "demo",
