@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "loopback": "1.x >=1.7.0",
-    "loopback-connector-mssql": "1.x.x"
+    "loopback-connector-mssql": "0.9.x"
   },
   "optionalDependencies": {
     "loopback-explorer": "~1.1.0",
