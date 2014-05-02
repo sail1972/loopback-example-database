@@ -34,8 +34,8 @@ command:
 ```sh
     slc lb project loopback-example-database
     cd loopback-example-database
-    slc lb datasource postgresql --connector postgresql
-    slc lb model account -i --data-source postgresql
+    slc lb datasource accountDB --connector postgresql
+    slc lb model account -i --data-source accountDB
 ```
 
 Follow the prompts to create your model with the following properties:
@@ -70,7 +70,7 @@ configuration as follows.
 In datasoures.json, replace the data source configuration for postgresql with the following snippet:
 
 ```javascript
-    "postgresql": {
+    "accountDB": {
     "connector": "postgresql",
     "host": "demo.strongloop.com",
     "port": 5432,
@@ -175,7 +175,7 @@ First, we'll see the model definition for `account` in JSON format.
       "options": {
         "idInjection": false,
         "postgresql": {
-          "schema": "demo",
+          "schema": "public",
           "table": "account"
         }
       },
@@ -236,11 +236,11 @@ model definition based on the `account` table schema. `dataSource.discoverAndBui
 the model classes available to perform CRUD operations.
 
 ```javascript
-    dataSource.discoverSchema('account', {owner: 'demo'}, function (err, schema) {
+    dataSource.discoverSchema('account', {schema: 'public'}, function (err, schema) {
         console.log(JSON.stringify(schema, null, '  '));
     });
 
-    dataSource.discoverAndBuildModels('account', {owner: 'demo'}, function (err, models) {
+    dataSource.discoverAndBuildModels('account', {schema: 'public'}, function (err, models) {
         models.Account.find(function (err, act) {
             if (err) {
                 console.error(err);

@@ -22,7 +22,7 @@
     "username": "demo",
     "password": "L00pBack"
   },
-  "postgresql": {
+  "accountDB": {
     "connector": "postgresql",
     "host": "demo.strongloop.com",
     "port": 5432,
