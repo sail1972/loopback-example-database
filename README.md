@@ -6,6 +6,7 @@ This project contains examples to demonstrate LoopBack connectors for databases:
 - [LoopBack MongoDB connector](https://github.com/strongloop/loopback-connector-mongodb)
 - [LoopBack Oracle connector](https://github.com/strongloop/loopback-connector-oracle)
 - [LoopBack PostgreSQL connector](https://github.com/strongloop/loopback-connector-postgresql)
+- [LoopBack Microsoft SQL Server connector](https://github.com/strongloop/loopback-connector-mssql)
 
 You can pretty much switch between the databases by updating datasources.json and models.json.
 No code change is required. In the following steps, we'll use postgresql as the example.
