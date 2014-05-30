@@ -1,6 +1,6 @@
 # loopback-example-database
 
-This project contains examples to demonstrate LoopBack connectors for databases:
+This project contains examples to demonstrate [LoopBack](http://loopback.io) connectors for databases:
 
 - [LoopBack PostgreSQL connector](https://github.com/strongloop/loopback-connector-postgresql)
 - [LoopBack MongoDB connector](https://github.com/strongloop/loopback-connector-mongodb)
