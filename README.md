@@ -120,32 +120,32 @@ Browse to [http://localhost:3000/api/accounts](http://localhost:3000/api/account
     "email": "foo@bar.com",
     "created": "2014-08-28T22:56:28.000Z", #yours will be different
     "modified": "2014-08-28T22:56:28.000Z", #yours will be different
-    "id": 1
+    "id": "5400c8d85d3b77e6bf6abc85" #yours will be different
   },
   {
     "email": "bar@bar.com",
     "created": "2014-08-28T22:56:28.000Z", #yours will be different
     "modified": "2014-08-28T22:56:28.000Z", #yours will be different
-    "id": 2
+    "id": "5400c8d85d3b77e6bf6abc86" #yours will be different
   }
 ]
 ```
 
-To get an account by id, browse to [http://localhost:3000/api/accounts/1](http://localhost:3000/api/accounts/1).
+To get an account by id, browse to [http://localhost:3000/api/accounts/5400c8d85d3b77e6bf6abc85](http://localhost:3000/api/accounts/5400c8d85d3b77e6bf6abc85).
 
 ```json
 {
   "email": "foo@bar.com",
   "created": "2014-08-28T22:56:28.000Z", #yours will be different
   "modified": "2014-08-28T22:56:28.000Z", #yours will be different
-  "id": 1
+  "id": "5400c8d85d3b77e6bf6abc85" #yours will be different
 }
 ```
 
 Each REST API can be viewed at [http://localhost:3000/explorer](http://localhost:3000/explorer)
 
 ###Discovery
-We do not support discovery for MongoDB at this time. If you would like this feature, please submit an issue in this repository.
+We do not support discovery for MongoDB at this time. If you would like this feature, please submit an [issue](https://github.com/strongloop/loopback-example-database/issues) in this repository.
 
 ##Conclusion
 As you can see, the MongoDB connector for LoopBack enables applications to work with data in MongoDB databases. It can be newly generated data from mobile devices that need to be persisted or existing data that need to be shared between mobile clients and other backend applications. No matter where you start, [LoopBack](http://loopback.io) makes it easy to handle your data with MongoDB. It’s great to have MongoDB in the Loop!
