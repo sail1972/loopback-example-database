@@ -18,7 +18,7 @@ git checkout mongodb
 ```
 
 ##Getting Started
-In this example, we will demonstrate the usage of the [LoopBack MySQL Connector](https://github.com/strongloop/loopback-connector-mysql). Instead of setting up your own database instance to connect to (which you would normally do), we will be connecting to an preconfigured MySQL instance running at demo.strongloop.com.
+In this example, we will demonstrate the usage of the [LoopBack MongoDB Connector](https://github.com/strongloop/loopback-connector-mongodb). Instead of setting up your own database instance to connect to (which you would normally do), we will be connecting to an preconfigured MongoDB instance running at demo.strongloop.com.
 
 ###Prerequisites
 We will need the [slc](https://github.com/strongloop/strongloop) (StrongLoop Controller) command line tool to simplify various tasks in the example.
@@ -28,12 +28,12 @@ npm install -g strongloop
 ```
 
 ###Create the LoopBack Application
-To demonstrate how to use [LoopBack MySQL Connector](https://github.com/strongloop/loopback-connector-mysql), let's create an application from scratch using the `slc` command. Follow the prompt and remember to name your project `loopback-example-database`. We will also add the connector to this project by using [NPM](https://www.npmjs.org/).
+To demonstrate how to use [LoopBack MongoDB Connector](https://github.com/strongloop/loopback-connector-mongodb), let's create an application from scratch using the `slc` command. Follow the prompt and remember to name your project `loopback-example-database`. We will also add the connector to this project by using [NPM](https://www.npmjs.org/).
 
 ```sh
 slc loopback #create project
 cd loopback-example-database
-npm install --save loopback-connector-mysql #add connector
+npm install --save loopback-connector-mongodb #add connector
 ```
 
 ###Add a Data Source
@@ -44,14 +44,14 @@ slc loopback:datasource accountDB
 ```
 
 ###Configure the Data Source
-By default, the auto-generated data source uses the [Memory Connector](http://docs.strongloop.com/display/LB/Memory+connector). However, since we're going to connect using MySQL, in `loopback-example-database/server/datasources.json`, modify the `accountDB` configuration to look like:
+By default, the auto-generated data source uses the [Memory Connector](http://docs.strongloop.com/display/LB/Memory+connector). However, since we're going to connect using MongoDB, in `loopback-example-database/server/datasources.json`, modify the `accountDB` configuration to look like:
 
 ```json
 {
   ...
   "accountDB": {
     "name": "accountDB",
-    "connector": "mysql",
+    "connector": "mongodb",
     "host": "demo.strongloop.com",
     "port": 3306,
     "database": "demo",
@@ -78,8 +78,8 @@ Follow the prompts to create your model with the following properties:
 
 These properties will be saved to `loopback-example-database/common/models/account.json` once the prompt exits.
 
-###Create the Table and Add Test Data
-Now that we have an `account` model configured, we can generate its corresponding table and fields in the database using the API's provided by [LoopBack](http://loopback.io). Copy `create-test-data.js` from this repository and put it into `loopback-example-database/server/create-test-data.js`. Run the following in `loopback-example-database/server` to add dummy data to your database:
+###Create the Collection and Add Test Data
+Now that we have an `account` model configured, we can generate its corresponding collection and documents in the database using the API's provided by [LoopBack](http://loopback.io). Copy `create-test-data.js` from this repository and put it into `loopback-example-database/server/create-test-data.js`. Run the following in `loopback-example-database/server` to add dummy data to your database:
 
 ```sh
 cd server #make sure you're in the server dir
@@ -102,9 +102,9 @@ dataSource.automigrate('account', function(er) {
 });
 ```
 
-`dataSource.automigrate()` creates or recreates a table in MySQL based on the model definition for `account`. This means **if the table already exists, it will be dropped and all of its existing data will be lost**. If you want to keep the existing data, use `dataSource.autoupdate()` instead.
+`dataSource.automigrate()` creates or recreates a collection in MongoDB based on the model definition for `account`. This means **if the collection already exists, it will be dropped and all of its existing data will be lost**. If you want to keep the existing data, use `dataSource.autoupdate()` instead.
 
-`Account.create()` inserts two sample records to the MySQL table.
+`Account.create()` inserts two sample documents into the MongoDB collection.
 
 ###Run the Application
 ```sh
@@ -145,7 +145,7 @@ To get an account by id, browse to [http://localhost:3000/api/accounts/1](http:/
 Each REST API can be viewed at [http://localhost:3000/explorer](http://localhost:3000/explorer)
 
 ###Discovery
-Now that we have the `account` table created properly in the database, we can discover (reverse engineer) the LoopBack model from the existing database schema. Change to the `loopback-example-database/server` directory and run:
+Now that we have the `account` collection created properly in the database, we can discover (reverse engineer) the LoopBack model from the existing database schema. Change to the `loopback-example-database/server` directory and run:
 
 ```sh
 cd server #change back to the server dir
@@ -159,9 +159,9 @@ First, we'll see the model definition for `account` in JSON format.
   "name": "Account",
   "options": {
     "idInjection": false,
-    "mysql": {
+    "mongodb": {
       "schema": "demo",
-      "table": "account"
+      "collection": "account"
     }
   },
   "properties": {
@@ -172,7 +172,7 @@ First, we'll see the model definition for `account` in JSON format.
       "precision": 10,
       "scale": 0,
       "id": 1,
-      "mysql": {
+      "mongodb": {
         "columnName": "id",
         "dataType": "int",
         "dataLength": null,
@@ -187,7 +187,7 @@ First, we'll see the model definition for `account` in JSON format.
       "length": 1536,
       "precision": null,
       "scale": null,
-      "mysql": {
+      "mongodb": {
         "columnName": "email",
         "dataType": "varchar",
         "dataLength": 1536,
@@ -215,7 +215,7 @@ Following the model definition, existing `accounts` are then displayed:
 ```
 
 ####discover.js
-The `dataSource.discoverSchema()` method returns the model definition based on the `account` table schema. `dataSource.discoverAndBuildModels()` goes one step further by making the model classes available to perform CRUD operations.
+The `dataSource.discoverSchema()` method returns the model definition based on the `account` collection schema. `dataSource.discoverAndBuildModels()` goes one step further by making the model classes available to perform CRUD operations.
 
 ```javascript
 dataSource.discoverSchema('account', { owner: 'demo' }, function(er, schema) {
@@ -234,7 +234,7 @@ dataSource.discoverAndBuildModels('account', { owner: 'demo' }, function(er, mod
 ```
 
 ##Conclusion
-As you can see, the MySQL connector for LoopBack enables applications to work with data in MySQL databases. It can be newly generated data from mobile devices that need to be persisted or existing data that need to be shared between mobile clients and other backend applications. No matter where you start, [LoopBack](http://loopback.io) makes it easy to handle your data with MySQL. It’s great to have MySQL in the Loop!
+As you can see, the MongoDB connector for LoopBack enables applications to work with data in MongoDB databases. It can be newly generated data from mobile devices that need to be persisted or existing data that need to be shared between mobile clients and other backend applications. No matter where you start, [LoopBack](http://loopback.io) makes it easy to handle your data with MongoDB. It’s great to have MongoDB in the Loop!
 
 ##LoopBack
 [LoopBack](http://docs.strongloop.com/loopback) is an open source mobile backend framework that connects mobile devices to enterprise data. It provides out-of-box data access capabilities for models through pluggable [datasources and connectors](http://docs.strongloop.com/loopback-datasource-juggler/#loopback-datasource-and-connector-guide). Connectors provide connectivity to various backend systems (such as databases or REST APIs). Models are in turn exposed to mobile devices as REST APIs and SDKs. For more information, see [https://github.com/strongloop/loopback](https://github.com/strongloop/loopback).
