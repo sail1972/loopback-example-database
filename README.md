@@ -9,12 +9,12 @@ The purpose of this project is to demonstrate the usage of various [LoopBack](ht
 |[LoopBack Oracle Connector](https://github.com/strongloop/loopback-connector-oracle)|[oracle](https://github.com/strongloop/loopback-example-database/tree/oracle)|
 |[LoopBack PostgreSQL Connector](https://github.com/strongloop/loopback-connector-postgresql)|[postgresql](https://github.com/strongloop/loopback-example-database/tree/postgresql)|
 
-For example, run the following to view the MongoDB example:
+For example, run the following to view the Oracle example:
 
 ```sh
 git clone https://github.com/strongloop/loopback-example-database.git
 cd loopback-example-database
-git checkout mongodb
+git checkout oracle
 ```
 
 ##Getting Started
