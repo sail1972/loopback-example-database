@@ -18,7 +18,7 @@ git checkout mongodb
 ```
 
 ##Getting Started
-In this example, we will demonstrate the usage of the [LoopBack MySQL Connector](https://github.com/strongloop/loopback-connector-mysql). Instead of setting up your own database instance to connect to (which you would normally do), we will be connecting to an preconfigured MySQL instance running at demo.strongloop.com.
+In this example, we will demonstrate the usage of the [LoopBack Microsoft SQL Connector](https://github.com/strongloop/loopback-connector-mssql). Instead of setting up your own database instance to connect to (which you would normally do), we will be connecting to an preconfigured Microsoft SQL instance running at demo.strongloop.com.
 
 ###Prerequisites
 We will need the [slc](https://github.com/strongloop/strongloop) (StrongLoop Controller) command line tool to simplify various tasks in the example.
@@ -28,12 +28,12 @@ npm install -g strongloop
 ```
 
 ###Create the LoopBack Application
-To demonstrate how to use [LoopBack MySQL Connector](https://github.com/strongloop/loopback-connector-mysql), let's create an application from scratch using the `slc` command. Follow the prompt and remember to name your project `loopback-example-database`. We will also add the connector to this project by using [NPM](https://www.npmjs.org/).
+To demonstrate how to use [LoopBack Microsoft SQL Connector](https://github.com/strongloop/loopback-connector-mssql), let's create an application from scratch using the `slc` command. Follow the prompt and remember to name your project `loopback-example-database`. We will also add the connector to this project by using [NPM](https://www.npmjs.org/).
 
 ```sh
 slc loopback #create project
 cd loopback-example-database
-npm install --save loopback-connector-mysql #add connector
+npm install --save loopback-connector-mssql #add connector
 ```
 
 ###Add a Data Source
@@ -44,16 +44,16 @@ slc loopback:datasource accountDB
 ```
 
 ###Configure the Data Source
-By default, the auto-generated data source uses the [Memory Connector](http://docs.strongloop.com/display/LB/Memory+connector). However, since we're going to connect using MySQL, in `loopback-example-database/server/datasources.json`, modify the `accountDB` configuration to look like:
+By default, the auto-generated data source uses the [Memory Connector](http://docs.strongloop.com/display/LB/Memory+connector). However, since we're going to connect using Microsoft SQL, in `loopback-example-database/server/datasources.json`, modify the `accountDB` configuration to look like:
 
 ```json
 {
   ...
   "accountDB": {
     "name": "accountDB",
-    "connector": "mysql",
+    "connector": "mssql",
     "host": "demo.strongloop.com",
-    "port": 3306,
+    "port": 1433,
     "database": "demo",
     "username": "demo",
     "password": "L00pBack"
@@ -102,9 +102,9 @@ dataSource.automigrate('account', function(er) {
 });
 ```
 
-`dataSource.automigrate()` creates or recreates a table in MySQL based on the model definition for `account`. This means **if the table already exists, it will be dropped and all of its existing data will be lost**. If you want to keep the existing data, use `dataSource.autoupdate()` instead.
+`dataSource.automigrate()` creates or recreates a table in Microsoft SQL based on the model definition for `account`. This means **if the table already exists, it will be dropped and all of its existing data will be lost**. If you want to keep the existing data, use `dataSource.autoupdate()` instead.
 
-`Account.create()` inserts two sample records to the MSSQL table.
+`Account.create()` inserts two sample records to the Microsoft SQL table.
 
 ###Run the Application
 ```sh
@@ -159,8 +159,8 @@ First, we'll see the model definition for `account` in JSON format.
   "name": "Account",
   "options": {
     "idInjection": false,
-    "mysql": {
-      "schema": "demo",
+    "mssql": {
+      "schema": "dbo",
       "table": "account"
     }
   },
@@ -172,7 +172,7 @@ First, we'll see the model definition for `account` in JSON format.
       "precision": 10,
       "scale": 0,
       "id": 1,
-      "mysql": {
+      "mssql": {
         "columnName": "id",
         "dataType": "int",
         "dataLength": null,
@@ -184,13 +184,13 @@ First, we'll see the model definition for `account` in JSON format.
     "email": {
       "type": "String",
       "required": false,
-      "length": 1536,
+      "length": 255,
       "precision": null,
       "scale": null,
-      "mysql": {
+      "mssql": {
         "columnName": "email",
-        "dataType": "varchar",
-        "dataLength": 1536,
+        "dataType": "nvarchar",
+        "dataLength": 255,
         "dataPrecision": null,
         "dataScale": null,
         "nullable": "YES"
@@ -206,24 +206,24 @@ Following the model definition, existing `accounts` are then displayed:
 ```json
 [ { id: 1,
     email: 'foo@bar.com',
-    created: Thu Aug 28 2014 15:56:28 GMT-0700 (PDT),
-    modified: Thu Aug 28 2014 15:56:28 GMT-0700 (PDT) },
+    created: Fri Aug 29 2014 17:43:19 GMT-0700 (PDT),
+    modified: Fri Aug 29 2014 17:43:19 GMT-0700 (PDT) },
   { id: 2,
     email: 'bar@bar.com',
-    created: Thu Aug 28 2014 15:56:28 GMT-0700 (PDT),
-    modified: Thu Aug 28 2014 15:56:28 GMT-0700 (PDT) } ]
+    created: Fri Aug 29 2014 17:43:19 GMT-0700 (PDT),
+    modified: Fri Aug 29 2014 17:43:19 GMT-0700 (PDT) } ]
 ```
 
 ####discover.js
 The `dataSource.discoverSchema()` method returns the model definition based on the `account` table schema. `dataSource.discoverAndBuildModels()` goes one step further by making the model classes available to perform CRUD operations.
 
 ```javascript
-dataSource.discoverSchema('account', { owner: 'demo' }, function(er, schema) {
+dataSource.discoverSchema('account', { owner: 'dbo' }, function(er, schema) {
   ...
   console.log(JSON.stringify(schema, null, '  '));
 });
 
-dataSource.discoverAndBuildModels('account', { owner: 'demo' }, function(er, models) {
+dataSource.discoverAndBuildModels('account', { owner: 'dbo' }, function(er, models) {
   ...
   models.Account.find(function(er, accounts) {
     if (er) return console.log(er);
@@ -234,7 +234,7 @@ dataSource.discoverAndBuildModels('account', { owner: 'demo' }, function(er, mod
 ```
 
 ##Conclusion
-As you can see, the MySQL connector for LoopBack enables applications to work with data in MySQL databases. It can be newly generated data from mobile devices that need to be persisted or existing data that need to be shared between mobile clients and other backend applications. No matter where you start, [LoopBack](http://loopback.io) makes it easy to handle your data with MySQL. It’s great to have MySQL in the Loop!
+As you can see, the Microsoft SQL connector for LoopBack enables applications to work with data in Microsoft SQL databases. It can be newly generated data from mobile devices that need to be persisted or existing data that need to be shared between mobile clients and other backend applications. No matter where you start, [LoopBack](http://loopback.io) makes it easy to handle your data with Microsoft SQL. It’s great to have Microsoft SQL in the Loop!
 
 ##LoopBack
 [LoopBack](http://docs.strongloop.com/loopback) is an open source mobile backend framework that connects mobile devices to enterprise data. It provides out-of-box data access capabilities for models through pluggable [datasources and connectors](http://docs.strongloop.com/loopback-datasource-juggler/#loopback-datasource-and-connector-guide). Connectors provide connectivity to various backend systems (such as databases or REST APIs). Models are in turn exposed to mobile devices as REST APIs and SDKs. For more information, see [https://github.com/strongloop/loopback](https://github.com/strongloop/loopback).
