@@ -1,12 +1,13 @@
 var server = require('./server');
 var dataSource = server.dataSources.accountDB;
 
-dataSource.discoverSchema('account', { owner: 'demo' }, function(er, schema) {
+dataSource.discoverSchema('account', { schema: 'public' },
+    function(er, schema) {
   if (er) throw er;
   console.log(JSON.stringify(schema, null, '  '));
 });
 
-dataSource.discoverAndBuildModels('account', { owner: 'demo' },
+dataSource.discoverAndBuildModels('account', { schema: 'public' },
     function(er, models) {
   if (er) throw er;
   models.Account.find(function(er, accounts) {
