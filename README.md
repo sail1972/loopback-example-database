@@ -18,7 +18,7 @@ git checkout mongodb
 ```
 
 ##Getting Started
-In this example, we will demonstrate the usage of the [LoopBack MySQL Connector](https://github.com/strongloop/loopback-connector-mysql). Instead of setting up your own database instance to connect to (which you would normally do), we will be connecting to an preconfigured MySQL instance running at demo.strongloop.com.
+In this example, we will demonstrate the usage of the [LoopBack PostgreSQL Connector](https://github.com/strongloop/loopback-connector-postgresql). Instead of setting up your own database instance to connect to (which you would normally do), we will be connecting to an preconfigured PostgreSQL instance running at demo.strongloop.com.
 
 ###Prerequisites
 We will need the [slc](https://github.com/strongloop/strongloop) (StrongLoop Controller) command line tool to simplify various tasks in the example.
@@ -28,12 +28,12 @@ npm install -g strongloop
 ```
 
 ###Create the LoopBack Application
-To demonstrate how to use [LoopBack MySQL Connector](https://github.com/strongloop/loopback-connector-mysql), let's create an application from scratch using the `slc` command. Follow the prompt and remember to name your project `loopback-example-database`. We will also add the connector to this project by using [NPM](https://www.npmjs.org/).
+To demonstrate how to use [LoopBack PostgreSQL Connector](https://github.com/strongloop/loopback-connector-postgresql), let's create an application from scratch using the `slc` command. Follow the prompt and remember to name your project `loopback-example-database`. We will also add the connector to this project by using [NPM](https://www.npmjs.org/).
 
 ```sh
 slc loopback #create project
 cd loopback-example-database
-npm install --save loopback-connector-mysql #add connector
+npm install --save loopback-connector-postgres #add connector
 ```
 
 ###Add a Data Source
@@ -44,14 +44,14 @@ slc loopback:datasource accountDB
 ```
 
 ###Configure the Data Source
-By default, the auto-generated data source uses the [Memory Connector](http://docs.strongloop.com/display/LB/Memory+connector). However, since we're going to connect using MySQL, in `loopback-example-database/server/datasources.json`, modify the `accountDB` configuration to look like:
+By default, the auto-generated data source uses the [Memory Connector](http://docs.strongloop.com/display/LB/Memory+connector). However, since we're going to connect using PostgreSQL, in `loopback-example-database/server/datasources.json`, modify the `accountDB` configuration to look like:
 
 ```json
 {
   ...
   "accountDB": {
     "name": "accountDB",
-    "connector": "mysql",
+    "connector": "postgresql",
     "host": "demo.strongloop.com",
     "port": 5432,
     "database": "demo",
@@ -102,7 +102,7 @@ dataSource.automigrate('account', function(er) {
 });
 ```
 
-`dataSource.automigrate()` creates or recreates a table in MySQL based on the model definition for `account`. This means **if the table already exists, it will be dropped and all of its existing data will be lost**. If you want to keep the existing data, use `dataSource.autoupdate()` instead.
+`dataSource.automigrate()` creates or recreates a table in PostgreSQL based on the model definition for `account`. This means **if the table already exists, it will be dropped and all of its existing data will be lost**. If you want to keep the existing data, use `dataSource.autoupdate()` instead.
 
 `Account.create()` inserts two sample records to the PostgreSQL table.
 
@@ -159,38 +159,22 @@ First, we'll see the model definition for `account` in JSON format.
   "name": "Account",
   "options": {
     "idInjection": false,
-    "mysql": {
-      "schema": "demo",
+    "postgresql": {
+      "schema": "public",
       "table": "account"
     }
   },
   "properties": {
-    "id": {
-      "type": "Number",
-      "required": false,
-      "length": null,
-      "precision": 10,
-      "scale": 0,
-      "id": 1,
-      "mysql": {
-        "columnName": "id",
-        "dataType": "int",
-        "dataLength": null,
-        "dataPrecision": 10,
-        "dataScale": 0,
-        "nullable": "NO"
-      }
-    },
     "email": {
       "type": "String",
       "required": false,
-      "length": 1536,
+      "length": 1024,
       "precision": null,
       "scale": null,
-      "mysql": {
+      "postgresql": {
         "columnName": "email",
-        "dataType": "varchar",
-        "dataLength": 1536,
+        "dataType": "character varying",
+        "dataLength": 1024,
         "dataPrecision": null,
         "dataScale": null,
         "nullable": "YES"
@@ -204,14 +188,14 @@ First, we'll see the model definition for `account` in JSON format.
 Following the model definition, existing `accounts` are then displayed:
 
 ```json
-[ { id: 1,
-    email: 'foo@bar.com',
-    created: Thu Aug 28 2014 15:56:28 GMT-0700 (PDT),
-    modified: Thu Aug 28 2014 15:56:28 GMT-0700 (PDT) },
-  { id: 2,
-    email: 'bar@bar.com',
-    created: Thu Aug 28 2014 15:56:28 GMT-0700 (PDT),
-    modified: Thu Aug 28 2014 15:56:28 GMT-0700 (PDT) } ]
+[ { email: 'foo@bar.com',
+    created: Sun Aug 31 2014 15:10:07 GMT-0700 (PDT),
+    modified: Sun Aug 31 2014 15:10:07 GMT-0700 (PDT),
+    id: 1 },
+  { email: 'bar@bar.com',
+    created: Sun Aug 31 2014 15:10:07 GMT-0700 (PDT),
+    modified: Sun Aug 31 2014 15:10:07 GMT-0700 (PDT),
+    id: 2 } ]
 ```
 
 ####discover.js
@@ -234,7 +218,7 @@ dataSource.discoverAndBuildModels('account', { owner: 'demo' }, function(er, mod
 ```
 
 ##Conclusion
-As you can see, the MySQL connector for LoopBack enables applications to work with data in MySQL databases. It can be newly generated data from mobile devices that need to be persisted or existing data that need to be shared between mobile clients and other backend applications. No matter where you start, [LoopBack](http://loopback.io) makes it easy to handle your data with MySQL. It’s great to have MySQL in the Loop!
+As you can see, the PostgreSQL connector for LoopBack enables applications to work with data in PostgreSQL databases. It can be newly generated data from mobile devices that need to be persisted or existing data that need to be shared between mobile clients and other backend applications. No matter where you start, [LoopBack](http://loopback.io) makes it easy to handle your data with PostgreSQL. It’s great to have PostgreSQL in the Loop!
 
 ##LoopBack
 [LoopBack](http://docs.strongloop.com/loopback) is an open source mobile backend framework that connects mobile devices to enterprise data. It provides out-of-box data access capabilities for models through pluggable [datasources and connectors](http://docs.strongloop.com/loopback-datasource-juggler/#loopback-datasource-and-connector-guide). Connectors provide connectivity to various backend systems (such as databases or REST APIs). Models are in turn exposed to mobile devices as REST APIs and SDKs. For more information, see [https://github.com/strongloop/loopback](https://github.com/strongloop/loopback).
