@@ -5,9 +5,9 @@
   },
   "accountDB": {
     "name": "accountDB",
-    "connector": "mysql",
+    "connector": "postgresql",
     "host": "demo.strongloop.com",
-    "port": 3306,
+    "port": 5432,
     "database": "demo",
     "username": "demo",
     "password": "L00pBack"
