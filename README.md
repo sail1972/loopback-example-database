@@ -44,7 +44,7 @@ slc loopback:datasource accountDB
 ```
 
 ###Configure the Data Source
-By default, the auto-generated data source uses the [Memory Connector](http://docs.strongloop.com/display/LB/Memory+connector). However, since we're going to connect using PostgreSQL, in `loopback-example-database/server/datasources.json`, modify the `accountDB` configuration to look like:
+By default, the auto-generated data source uses the [Memory Connector](http://docs.strongloop.com/display/LB/Memory+connector). However, since we're going to connect to a PostgreSQL Server, in `loopback-example-database/server/datasources.json`, modify the `accountDB` configuration to look like:
 
 ```json
 {
