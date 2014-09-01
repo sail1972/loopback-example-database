@@ -18,7 +18,7 @@ git checkout mongodb
 ```
 
 ##Getting Started
-In this example, we will demonstrate the usage of the [LoopBack Microsoft SQL Connector](https://github.com/strongloop/loopback-connector-mssql). Instead of setting up your own database instance to connect to (which you would normally do), we will be connecting to an preconfigured Microsoft SQL instance running at demo.strongloop.com.
+In this example, we will demonstrate the usage of the [LoopBack Microsoft SQL Server Connector](https://github.com/strongloop/loopback-connector-mssql). Instead of setting up your own database instance to connect to (which you would normally do), we will be connecting to an preconfigured Microsoft SQL Server instance running at demo.strongloop.com.
 
 ###Prerequisites
 We will need the [slc](https://github.com/strongloop/strongloop) (StrongLoop Controller) command line tool to simplify various tasks in the example.
@@ -28,7 +28,7 @@ npm install -g strongloop
 ```
 
 ###Create the LoopBack Application
-To demonstrate how to use [LoopBack Microsoft SQL Connector](https://github.com/strongloop/loopback-connector-mssql), let's create an application from scratch using the `slc` command. Follow the prompt and remember to name your project `loopback-example-database`. We will also add the connector to this project by using [NPM](https://www.npmjs.org/).
+To demonstrate how to use [LoopBack Microsoft SQL Server Connector](https://github.com/strongloop/loopback-connector-mssql), let's create an application from scratch using the `slc` command. Follow the prompt and remember to name your project `loopback-example-database`. We will also add the connector to this project by using [NPM](https://www.npmjs.org/).
 
 ```sh
 slc loopback #create project
@@ -44,7 +44,7 @@ slc loopback:datasource accountDB
 ```
 
 ###Configure the Data Source
-By default, the auto-generated data source uses the [Memory Connector](http://docs.strongloop.com/display/LB/Memory+connector). However, since we're going to connect using Microsoft SQL, in `loopback-example-database/server/datasources.json`, modify the `accountDB` configuration to look like:
+By default, the auto-generated data source uses the [Memory Connector](http://docs.strongloop.com/display/LB/Memory+connector). However, since we're going to connect to a Microsoft SQL Server, in `loopback-example-database/server/datasources.json`, modify the `accountDB` configuration to look like:
 
 ```json
 {
@@ -102,9 +102,9 @@ dataSource.automigrate('account', function(er) {
 });
 ```
 
-`dataSource.automigrate()` creates or recreates a table in Microsoft SQL based on the model definition for `account`. This means **if the table already exists, it will be dropped and all of its existing data will be lost**. If you want to keep the existing data, use `dataSource.autoupdate()` instead.
+`dataSource.automigrate()` creates or recreates a table in Microsoft SQL Server based on the model definition for `account`. This means **if the table already exists, it will be dropped and all of its existing data will be lost**. If you want to keep the existing data, use `dataSource.autoupdate()` instead.
 
-`Account.create()` inserts two sample records to the Microsoft SQL table.
+`Account.create()` inserts two sample records to the Microsoft SQL Server table.
 
 ###Run the Application
 ```sh
@@ -234,7 +234,7 @@ dataSource.discoverAndBuildModels('account', { owner: 'dbo' }, function(er, mode
 ```
 
 ##Conclusion
-As you can see, the Microsoft SQL connector for LoopBack enables applications to work with data in Microsoft SQL databases. It can be newly generated data from mobile devices that need to be persisted or existing data that need to be shared between mobile clients and other backend applications. No matter where you start, [LoopBack](http://loopback.io) makes it easy to handle your data with Microsoft SQL. It’s great to have Microsoft SQL in the Loop!
+As you can see, the Microsoft SQL Server connector for LoopBack enables applications to work with data in Microsoft SQL Server databases. It can be newly generated data from mobile devices that need to be persisted or existing data that need to be shared between mobile clients and other backend applications. No matter where you start, [LoopBack](http://loopback.io) makes it easy to handle your data with Microsoft SQL Server. It’s great to have Microsoft SQL Server in the Loop!
 
 ##LoopBack
 [LoopBack](http://docs.strongloop.com/loopback) is an open source mobile backend framework that connects mobile devices to enterprise data. It provides out-of-box data access capabilities for models through pluggable [datasources and connectors](http://docs.strongloop.com/loopback-datasource-juggler/#loopback-datasource-and-connector-guide). Connectors provide connectivity to various backend systems (such as databases or REST APIs). Models are in turn exposed to mobile devices as REST APIs and SDKs. For more information, see [https://github.com/strongloop/loopback](https://github.com/strongloop/loopback).
