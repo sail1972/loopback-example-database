@@ -53,7 +53,7 @@ By default, the auto-generated data source uses the [Memory Connector](http://do
     "name": "accountDB",
     "connector": "mongodb",
     "host": "demo.strongloop.com",
-    "port": 3306,
+    "port": 27017,
     "database": "demo",
     "username": "demo",
     "password": "L00pBack"
